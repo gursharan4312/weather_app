@@ -1,32 +1,56 @@
 import React from "react";
-import { Container } from "reactstrap";
+import { Container, Row, Col } from "reactstrap";
 
 export default function WeatherDisplay({ data }) {
   return (
-    <Container>
+    <Container className="weather-container">
       {data.cod === 200 ? (
         <>
-          <h1>City:{data.name}</h1>
-          <h1>Country:{data.sys.country}</h1>
-          <h4>Coordinates:</h4>
-          <ul>
-            <li>Lat:{data.coord.lat}</li>
-            <li>Lon:{data.coord.lon}</li>
-          </ul>
-          <h4>Weather</h4>
-          <ul>
-            <li>Main:{data.weather[0].main}</li>
-            <li>Description:{data.weather[0].description}</li>
-            <li>Temp:{data.main.temp}</li>
-            <li>Temp-max:{data.main.temp_max}</li>
-            <li>Temp-min:{data.main.temp_min}</li>
-            <li>Pressure:{data.main.pressure}</li>
-            <li>Humidity:{data.main.humidity}</li>
-          </ul>
-          <h4>Wind:</h4>
-          <ul>
-            <li>Speed:{data.wind.speed}</li>
-          </ul>
+          <Row className="weather-header my-4">
+            <Col
+              md={4}
+              className="mx-auto"
+              style={{
+                display: "flex",
+                flexDirection: "row",
+                justifyContent: "space-around"
+              }}
+            >
+              <img
+                src={`http://openweathermap.org/img/wn/${
+                  data.weather[0].icon
+                }@2x.png`}
+                className="weather-icon"
+              />
+            </Col>
+          </Row>
+          <Row className="my-4">
+            <Col md={4}>
+              <h2 style={{ textTransform: "uppercase" }}>
+                {data.name},{data.sys.country}
+              </h2>
+              <h6>Lat:{data.coord.lat}</h6>
+              <h6>Lon:{data.coord.lon}</h6>
+            </Col>
+            <Col md={4} />
+            <Col md={4}>
+              <h2>{data.weather[0].main}</h2>
+              <h6>{data.weather[0].description}</h6>
+            </Col>
+          </Row>
+          <Row>
+            <Col md={4}>
+              <h4>Wind: {data.wind.speed} m/sec</h4>
+              <h4>Pressure: {data.main.pressure} hPa</h4>
+              <h4>Humidity: {data.main.humidity} %</h4>
+            </Col>
+            <Col md={4} />
+            <Col md={4}>
+              <h4>Temp: {data.main.temp} K</h4>
+              <h4>Temp-max: {data.main.temp_max} K</h4>
+              <h4>Temp-min: {data.main.temp_min} K</h4>
+            </Col>
+          </Row>
         </>
       ) : null}
     </Container>
